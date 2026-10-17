@@ -59,7 +59,9 @@ gcloud secrets add-iam-policy-binding "$SIGNING_SECRET" --project "$PROJECT_ID" 
 gcloud projects add-iam-policy-binding "$PROJECT_ID" \
   --member "serviceAccount:${RUNTIME_SA}" --role roles/aiplatform.user --condition=None >/dev/null
 
-ENV_VARS="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${REGION},GEMINI_MODEL=${GEMINI_MODEL}"
+# Vertex AI location is separate from the Cloud Run region: Gemini 3.x models are served from "global".
+VERTEX_LOCATION="${VERTEX_LOCATION:-global}"
+ENV_VARS="GOOGLE_CLOUD_PROJECT=${PROJECT_ID},GOOGLE_CLOUD_LOCATION=${VERTEX_LOCATION},GEMINI_MODEL=${GEMINI_MODEL}"
 if [ -n "$LEDGER_BUCKET" ]; then
   say "Ensuring durable ledger bucket gs://${LEDGER_BUCKET}"
   if ! gcloud storage buckets describe "gs://${LEDGER_BUCKET}" --project "$PROJECT_ID" >/dev/null 2>&1; then
