@@ -1,0 +1,25 @@
+[
+  {
+    "log_id": "LOG-20261004-B4",
+    "timestamp": "2026-10-04T07:42:15Z",
+    "line_id": "LINE-4B",
+    "station_id": "FEEDER-SPINDLE-02",
+    "operator_id": "TECH_8412_DESHMUKH",
+    "shift": 2,
+    "raw_text": "Shift 2 - Line 4B: Operator noted intermittent 1.8 Hz vibration spike on spindle head. Visual check showed light surface residue; logged as non-critical.",
+    "normalized_observations": {
+      "reported_anomaly": "Intermittent harmonic vibration",
+      "indicated_frequency_band_khz": 1.8,
+      "visual_comment": "Light surface residue along bearing collar",
+      "operator_action_taken": "None (logged as non-critical)",
+      "operating_temperature_c": 53.4,
+      "rms_vibration_mm_s": 4.12
+    },
+    "correlation_metadata": {
+      "alarm_tripped": false,
+      "scada_status": "GREEN",
+      "rolling_2h_drift_percentage": "+18.2%",
+      "baseline_median_rms": 3.48
+    }
+  }
+]

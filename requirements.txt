@@ -1,0 +1,22 @@
+# Production dependencies - pinned to the exact versions the test-suite was validated against.
+# Direct dependencies only; pip resolves the (compatible) transitive set. Bump deliberately, then re-run pytest.
+
+# --- Backend (FastAPI) ---
+fastapi==0.143.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.1
+jsonschema==4.26.0
+
+# --- Gemini: one SDK for both back-ends. Vertex AI (ADC + GOOGLE_CLOUD_PROJECT) or Google AI Studio
+#     (GEMINI_API_KEY). google-genai supersedes google-cloud-aiplatform's generative_models module. ---
+google-genai==2.29.0
+
+# --- Durable audit ledger (gs://<LEDGER_BUCKET_NAME>/ledger/<sha256>.json) ---
+google-cloud-storage==3.17.1
+
+# --- AOI SVG -> PNG for multimodal input (needs libcairo2 at runtime; installed in the Dockerfile) ---
+cairosvg==2.9.1
+
+# --- Frontend (Streamlit command console) ---
+streamlit==1.65.0
+requests==2.34.2

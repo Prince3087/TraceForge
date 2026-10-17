@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.git/
+.bob/
+tests/
+*.md
+!data/*.md
+data/audit_ledger.jsonl
+.env

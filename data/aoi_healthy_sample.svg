@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%">
+  <defs>
+    <radialGradient id="lensShading" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1e222b"/>
+      <stop offset="70%" stop-color="#0e1117"/>
+      <stop offset="100%" stop-color="#05070a"/>
+    </radialGradient>
+    <linearGradient id="metalSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <pattern id="microGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background / AOI Inspection Chamber -->
+  <rect width="600" height="600" fill="url(#lensShading)"/>
+  <rect width="600" height="600" fill="url(#microGrid)" opacity="0.6"/>
+
+  <!-- HUD Reticle / Camera Alignment -->
+  <circle cx="300" cy="300" r="240" fill="none" stroke="#00f3ff" stroke-width="1" stroke-dasharray="8 6" opacity="0.4"/>
+  <circle cx="300" cy="300" r="260" fill="none" stroke="#00f3ff" stroke-width="0.5" opacity="0.2"/>
+  <line x1="40" y1="300" x2="120" y2="300" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+  <line x1="480" y1="300" x2="560" y2="300" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+  <line x1="300" y1="40" x2="300" y2="120" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+  <line x1="300" y1="480" x2="300" y2="560" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+
+  <!-- Pristine SMT Feeder Spindle Head -->
+  <circle cx="300" cy="300" r="150" fill="url(#metalSheen)" stroke="#cbd5e1" stroke-width="3"/>
+  <circle cx="300" cy="300" r="110" fill="#1e293b" stroke="#0f172a" stroke-width="4"/>
+  
+  <!-- Mirror Precision Ground Core (No defects, ΔE < 0.5) -->
+  <circle cx="300" cy="300" r="70" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <circle cx="300" cy="300" r="25" fill="#0f172a" stroke="#00f3ff" stroke-width="1.5"/>
+
+  <!-- Optical Ring LED Highlights -->
+  <path d="M 200 200 A 140 140 0 0 1 400 200" fill="none" stroke="#ffffff" stroke-width="5" opacity="0.4" stroke-linecap="round"/>
+
+  <!-- AOI Sensor Status Overlays -->
+  <text x="35" y="50" font-family="'JetBrains Mono', monospace" font-size="12" fill="#00f3ff" letter-spacing="1.5">CAM_04 [STATION_2B] // LIVE</text>
+  <text x="35" y="70" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8">EXP: 1/4000s | GAIN: 0.0dB | ILLUM: 100% DIFFUSE</text>
+  <rect x="35" y="535" width="160" height="30" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="115" y="555" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="700" fill="#34d399" text-anchor="middle">STATUS: NOMINAL (PASS)</text>
+  <text x="565" y="555" font-family="'JetBrains Mono', monospace" font-size="11" fill="#64748b" text-anchor="end">ΔE_MAX: 0.42</text>
+</svg>

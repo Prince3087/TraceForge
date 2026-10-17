@@ -1,0 +1,28 @@
+# Build and push the TraceForge image to Google Artifact Registry (the legacy gcr.io path is gone).
+#
+#   Image: ${_REGION}-docker.pkg.dev/${PROJECT_ID}/traceforge-repo/traceforge:${SHORT_SHA}
+#
+# SHORT_SHA is populated automatically by Cloud Build *triggers*. For a manual `gcloud builds submit`
+# it is empty, so deploy.sh passes it explicitly:  --substitutions=_REGION=...,SHORT_SHA=$(git rev-parse --short HEAD)
+# Deployment itself is done by deploy.sh (`gcloud run deploy traceforge-engine`), which keeps the Cloud
+# Build service account free of run.admin / iam.serviceAccountUser.
+substitutions:
+  _REGION: us-central1
+
+steps:
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/traceforge-repo/traceforge:${SHORT_SHA}
+      - -t
+      - ${_REGION}-docker.pkg.dev/$PROJECT_ID/traceforge-repo/traceforge:latest
+      - .
+
+images:
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/traceforge-repo/traceforge:${SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/$PROJECT_ID/traceforge-repo/traceforge:latest
+
+options:
+  logging: CLOUD_LOGGING_ONLY

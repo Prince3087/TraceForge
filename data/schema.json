@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TraceForgeIncidentSynthesis",
+  "type": "object",
+  "required": [
+    "incident_id",
+    "timestamp",
+    "line_id",
+    "component_id",
+    "anomaly_signature",
+    "cross_silo_correlation",
+    "grounded_sop_citation",
+    "cost_of_inaction",
+    "decision_options",
+    "safety_gate"
+  ],
+  "properties": {
+    "incident_id": { "type": "string", "example": "INC-2026-10-04-0091" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "line_id": { "type": "string", "example": "LINE-4B" },
+    "component_id": { "type": "string", "example": "FEEDER-SPINDLE-02" },
+
+    "anomaly_signature": {
+      "type": "object",
+      "required": ["classification", "confidence_score", "optical_delta_e", "vibration_drift_pct"],
+      "properties": {
+        "classification": { "type": "string", "example": "Thermal Grease Seal Degradation" },
+        "confidence_score": { "type": "number", "minimum": 0, "maximum": 1, "example": 0.942 },
+        "optical_delta_e": { "type": "number", "example": 3.82 },
+        "vibration_drift_pct": { "type": "string", "example": "+18.2%" }
+      }
+    },
+
+    "cross_silo_correlation": {
+      "type": "object",
+      "required": ["scada_state", "shift_log_finding", "aoi_visual_finding", "synthesis_summary"],
+      "properties": {
+        "scada_state": { 
+          "type": "string", 
+          "example": "Nominal (4.12 mm/s RMS under 4.5 mm/s trip limit, but +18.2% upward slope)" 
+        },
+        "shift_log_finding": { 
+          "type": "string", 
+          "example": "Operator TECH_8412 reported 1.8 kHz harmonic vibration and residue at 07:42Z" 
+        },
+        "aoi_visual_finding": { 
+          "type": "string", 
+          "example": "Translucent yellow oxidized film detected on bearing collar (Delta-E = 3.82)" 
+        },
+        "synthesis_summary": { 
+          "type": "string", 
+          "example": "Isolated systems show normal status, but concurrent 18% vibration drift, 1.8 kHz harmonic peak, and yellow grease residue (Delta-E 3.82 > 3.0) confirm active thermal seal breakdown per SOP-SMT-4402." 
+        }
+      }
+    },
+
+    "grounded_sop_citation": {
+      "type": "object",
+      "required": ["sop_document_id", "section", "page_number", "verbatim_quote", "citation_valid"],
+      "properties": {
+        "sop_document_id": { "type": "string", "example": "SOP-SMT-4402-REV4.pdf" },
+        "section": { "type": "string", "example": "Section 4.2" },
+        "page_number": { "type": "integer", "example": 4 },
+        "verbatim_quote": { 
+          "type": "string", 
+          "example": "Residue discoloration exceeding Delta-E > 3.0 indicates seal degradation. If seal replacement is delayed beyond 48 hours, catastrophic bearing seizure occurs." 
+        },
+        "citation_valid": { "type": "boolean", "example": true }
+      }
+    },
+
+    "cost_of_inaction": {
+      "type": "object",
+      "required": ["risk_window_hours", "projected_scrap_cost_usd", "downtime_loss_usd", "total_financial_exposure_usd"],
+      "properties": {
+        "risk_window_hours": { "type": "integer", "example": 48 },
+        "projected_scrap_cost_usd": { "type": "number", "example": 3600.00 },
+        "downtime_loss_usd": { "type": "number", "example": 42500.00 },
+        "total_financial_exposure_usd": { "type": "number", "example": 46100.00 }
+      }
+    },
+
+    "decision_options": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["option_id", "title", "action_type", "line_pause_min", "projected_cost_usd", "scrap_avoided_units"],
+        "properties": {
+          "option_id": { "type": "string", "enum": ["OPTION_A", "OPTION_B"] },
+          "title": { "type": "string" },
+          "action_type": { "type": "string", "enum": ["IMMEDIATE_CALIBRATION_PAUSE", "DERATED_SPEED_RUN"] },
+          "line_pause_min": { "type": "integer" },
+          "projected_cost_usd": { "type": "number" },
+          "scrap_avoided_units": { "type": "integer" }
+        }
+      }
+    },
+
+    "safety_gate": {
+      "type": "object",
+      "required": ["requires_human_badge_auth", "autonomous_plc_override_blocked", "status"],
+      "properties": {
+        "requires_human_badge_auth": { "type": "boolean", "example": true },
+        "autonomous_plc_override_blocked": { "type": "boolean", "example": true },
+        "status": { "type": "string", "enum": ["PASSED_CONFIRMATION_REQUIRED", "REJECTED_UNGROUNDED"] }
+      }
+    }
+  }
+}
